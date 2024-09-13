@@ -1,0 +1,69 @@
+<form [formGroup]="form" class="form">
+  <div class="field">
+    <label>Название эпизода</label>
+    <input placeholder="Введите название эпизода"
+      [ngClass]="form.get('episode')?.invalid ? 'error-field' : ''"
+      [formControlName]="'episode'"
+    >
+    <div *ngIf="form.get('episode')?.errors?.['required']" class="error">
+      Обязательное поле
+    </div>
+    <div *ngIf="form.get('episode')?.errors?.['minlength']" class="error">
+      Минимальна длинна 5 символов
+    </div>
+  </div>
+  <div class="field">
+    <label>Рейтинг эпизода</label>
+    <select  [ngClass]="form.get('rating')?.invalid ? 'error-field' : ''" id="number-select" [formControlName]="'rating'">
+      <option value="" disabled selected hidden>Выберите число...</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+    <div *ngIf="form.get('rating')?.errors?.['required']" class="error">
+      Обязательное поле
+    </div>
+  </div>
+  <div class="field">
+    <label>Ваш отзыв</label>
+    <textarea
+   [formControlName]="'review'"
+      id="auto-resize-textarea"
+      rows="1"
+      (input)="adjustHeight($event)"
+      #autoResizeTextarea
+      placeholder="Введите ваш отзыв..."
+      class="input"
+    ></textarea>
+    <div *ngIf="form.get('review')?.errors?.['minlength']" class="error">
+      Минимальная длинна 10 символов
+    </div>
+    <div *ngIf="form.get('review')?.errors?.['maxlength']" class="error">
+     Максимальная длинна 500 символов
+    </div>
+  </div>
+  <div class="field">
+    <label>Ваше имя</label>
+    <input  placeholder="Введите ваше имя"
+      [formControlName]="'name'"
+    >
+    <div *ngIf="form.get('name')?.errors?.['required']" class="error">
+      Обязательное поле
+    </div>
+    <div *ngIf="form.get('name')?.errors?.['minlength']" class="error">
+      Минимальная длинна 2 символа
+    </div>
+  </div>
+  <button type="submit"
+  [disabled]="!isThisFormValid()"
+  >
+    Отправить
+  </button>
+</form>

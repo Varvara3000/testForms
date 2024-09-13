@@ -1,0 +1,64 @@
+<form [formGroup]="form" class="form">
+  <div class="field">
+    <label>Имя участника</label>
+    <input
+      [ngClass]="form.get('name')?.invalid ? 'error-field' : ''"
+      [formControlName]="'name'"
+      placeholder="введите имя участника"
+      class="input"
+    />
+    <div *ngIf="form.get('name')?.errors?.['required']" class="error">
+      Обязательное поле
+    </div>
+    <div *ngIf="form.get('name')?.errors?.['minlength']" class="error">
+      Минимальна длинна 2 символов
+    </div>
+  </div>
+  <div class="field">
+    <label>Дни участия</label>
+    <label>
+      <input type="checkbox" formControlName="monday" />
+      Понедельник</label
+    >
+    <label>
+      <input type="checkbox" formControlName="wednesday" />
+      Среда</label
+    >
+    <label>
+      <input type="checkbox" formControlName="friday" />
+      Пятница</label
+    >
+    <div
+      *ngIf="
+        form.get('monday')?.value === false &&
+        form.get('wednesday')?.value === false &&
+        form.get('friday')?.value === false
+      "
+      class="error"
+    >
+      Выберите хотя бы 1 чекбокс
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Комментарий</label>
+    <textarea
+      id="auto-resize-textarea"
+      rows="1"
+      (input)="adjustHeight($event)"
+      #autoResizeTextarea
+      placeholder="введите комментарий"
+      class="input"
+    ></textarea>
+    <div *ngIf="form.get('comment')?.errors?.['maxlength']" class="error">
+      Максимальная длинна 150 символов
+    </div>
+  </div>
+  <button
+  (click)="goToRating()"
+    [disabled]="!isThisFormValid()"
+    type="submit"
+  >
+    Отправить
+  </button>
+</form>

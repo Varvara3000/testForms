@@ -1,0 +1,51 @@
+<form [formGroup]="form" (submit)="register()" class="form">
+  <div class="field">
+    <label>Имя персонажа</label>
+    <input
+      [ngClass]="form.get('name')?.invalid ? 'error-field' : ''"
+      [formControlName]="'name'"
+      placeholder="введите имя персонажа"
+      class="input"
+    />
+    <div *ngIf="form.get('name')?.errors?.['required']" class="error">
+      Обязательное поле
+    </div>
+    <div *ngIf="form.get('name')?.errors?.['minlength']" class="error">
+      Минимальна длинна 3 символов
+    </div>
+  </div>
+  <div class="field">
+    <label>Возраст персонажа</label>
+    <input
+      [ngClass]="form.get('age')?.invalid ? 'error-field' : ''"
+      type="number"
+      [formControlName]="'age'"
+      placeholder="введите возраст персонажа"
+      class="input"
+    />
+    <div *ngIf="form.get('age')?.errors?.['required']" class="error">
+      Обязательное поле
+    </div>
+    <div *ngIf="form.get('age')?.errors?.['min']" class="error">
+      Вік має бути більше 3
+    </div>
+  </div>
+  <div class="field">
+    <label>Краткое содержание</label>
+    <textarea
+      [formControlName]="'summary'"
+      id="auto-resize-textarea"
+      rows="1"
+      (input)="adjustHeight($event)"
+      #autoResizeTextarea
+      placeholder="введите краткое содержание"
+      class="input"
+    ></textarea>
+    <div *ngIf="form.get('summary')?.errors?.['maxlength']" class="error">
+      Максимальная длинна 200 символов
+    </div>
+  </div>
+  <button [disabled]="!form.valid" type="submit" (click)="goToRegistration()">
+    Отправить
+  </button>
+</form>
